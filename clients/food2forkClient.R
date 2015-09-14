@@ -2,6 +2,9 @@ library(RCurl)
 library(jsonlite)
 library("clients/diskIOClient.R")
 
+# The Food 2 Fork
+apiKey <- loadCredentials("credentials/credentials.yml")$food2fork$key
+
 # Searching for recipes 
 # key: API Key
 # q: Search Query (Ingredients should be separated by commas, no spaces).

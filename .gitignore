@@ -14,3 +14,6 @@ vignettes/*.pdf
 
 # credentials
 credentials/credentials.yml
+
+# data store
+data/*
