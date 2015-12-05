@@ -1,11 +1,12 @@
 library(yaml)
+library(stringr)
 
-loadCredentials <- function(file="credentials/credentials.yml") {
-    if (file.exists(creds)) yaml.load_file(creds)
+loadCredentials <- function(credentials="credentials/credentials.yml") {
+    if (file.exists(credentials)) yaml.load_file(credentials)
 }
 
 writeDataFrame <- function(query_df, suffix) {
-    write.table(query_df, 
+    write.table(query_df,
                 file=paste("data/", format(Sys.time(), "%Y%m%d_%H%M%S"), "_", suffix, sep=""),
                 quote=FALSE,
                 row.names=FALSE,
@@ -16,14 +17,14 @@ saveSearchData <- function(searchDf) { writeDataFrame(searchDf, "search") }
 saveIngredientsData <- function(ingredientsDf) { writeDataFrame(ingredientsDf, "ingredients") }
 
 readDataFrame <- function(dataFile) {
-    read.table(file=dataFile, 
+    read.table(file=dataFile,
                header=TRUE,
                sep="\u0001")
 }
 
 mostRecentFile <- function(suffix, dir="data/") {
-    # This method reads the data directory and returns the most recent
-    # file matching the suffix.
+    # This method reads the data directory and returns the most recent file matching the suffix.
+    # TODO: handle case of no file found.
     files <- dir(dir)
     fileComponents <- str_split(files, "_")
     componentDf <- data.frame(
@@ -36,4 +37,3 @@ mostRecentFile <- function(suffix, dir="data/") {
 
 loadSearchData <- function() { readDataFrame(mostRecentFile("search")) }
 loadIngredientsData <- function() { readDataFrame(mostRecentFile("ingredients")) }
-
